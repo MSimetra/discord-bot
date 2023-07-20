@@ -4,9 +4,9 @@ const puppeteer = require('puppeteer');
 
 const fetchSiteData = async (url) => {
   const browser = await puppeteer.launch({
-    // executablePath: '/usr/bin/google-chrome',
+    executablePath: '/usr/bin/google-chrome',
     headless: 'false',
-    // args: ['--no-sandbox'],
+    args: ['--no-sandbox'],
   });
   const page = await browser.newPage();
   await page.goto(url);

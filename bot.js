@@ -1,9 +1,9 @@
 'use strict';
 
 require('dotenv').config();
-const { Client, GatewayIntentBits } = require('discord.js');
 const { saveDataToDB, getDataFromDB } = require('./db.js');
 const { fetchSiteData } = require('./commands.js');
+const { Client, GatewayIntentBits } = require('discord.js');
 const bot = new Client({
   intents: [GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,

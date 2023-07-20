@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: mysql_container
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    volumes:
+      - ./dbdata:/var/lib/mysql
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+      - MYSQL_DATABASE=exchange_rates
+      - MYSQL_USER=synevyr
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+  bot:
+    build: ./
+    image: bot:v1
+    container_name: bot_container
+    depends_on:
+      - mysqldb
+    volumes:
+      - ./:/app
+   
+    # ports:
+    #   - 3306:3306
+    # expose:
+    #   - 3306
+          
+volumes:
+  dbdata:      
