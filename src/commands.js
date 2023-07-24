@@ -4,9 +4,9 @@ const puppeteer = require('puppeteer');
 
 const fetchSiteData = async (url) => {
   const browser = await puppeteer.launch({
-    executablePath: '/usr/bin/google-chrome',
+    // executablePath: '/usr/bin/google-chrome',
     headless: 'false',
-    args: ['--no-sandbox'],
+    // args: ['--no-sandbox'],
   });
   const page = await browser.newPage();
   await page.goto(url);
@@ -24,13 +24,10 @@ const fetchSiteData = async (url) => {
     );
   })
 
-  const allRates = [];
-  for (let i = 0; i < currency.length; i++) {
-    const currentCurrency = {};
-    currentCurrency.name = currency[i];
-    currentCurrency.exchange_rate = rates[i];
-    allRates.push(currentCurrency);
-  }
+  const allRates = currency.map((currency, i) => ({
+    name: currency,
+    exchange_rate: rates[i],
+  }))
 
   const desiredRates = ['USD', 'EUR', 'PLN', 'GBP', 'JPY'];
   const finalData = allRates.filter(rate => desiredRates.includes(rate.name))

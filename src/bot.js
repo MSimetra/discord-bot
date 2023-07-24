@@ -1,7 +1,8 @@
 'use strict';
 
 require('dotenv').config();
-const { saveDataToDB, getDataFromDB } = require('./db.js');
+const token = process.env.DISCORD_TOKEN; 
+const { saveDataToDB, getDataFromDB } = require('./model.js');
 const { fetchSiteData } = require('./commands.js');
 const { Client, GatewayIntentBits } = require('discord.js');
 const bot = new Client({
@@ -12,7 +13,9 @@ const bot = new Client({
 });
 
 bot.on('messageCreate', async (message) => {
-  if (message.author.bot) return;
+  if (message.author.bot) {
+    return;
+  }
   if (message.content.startsWith('/fetch')) {
     const args = message.content.slice().trim().split(' ');
     const url = args[1];
@@ -33,4 +36,4 @@ bot.on('messageCreate', async (message) => {
   }
 });
 
-bot.login(process.env.DISCORD_TOKEN);
+bot.login(token);
